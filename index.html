@@ -5,10 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>NebulaChat — P2P мессенджер</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%237b5cff'/%3E%3Ctext x='50' y='70' font-size='58' text-anchor='middle' fill='white'%3EN%3C/text%3E%3C/svg%3E" />
-<!-- PeerJS (бесплатный публичный брокер). Грузится с CDN.
-     В превью внутри приложения внешние скрипты не загружаются — это нормально,
-     на реальном GitHub Pages библиотека загрузится. -->
-<script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=nyRZgj1oNp9vIIHbetd0yH_n16LWzdSvMP0zm949q0iS62ks3STHSOScvURHXZAJtqn_FfcQuzJW6_J-S3RcXdQFvL4mrIXuDgjt-tmWe1JS4-doYTDcjuxqcco0-jSg_ON-xQq1WaN3O-FILdDQSQ" charset="UTF-8"></script><script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
+<script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
 <style>
 :root{
   --bg:#0e0f1a;--bg2:#161827;--bg3:#1e2138;--accent:#7b5cff;--accent2:#5b8cff;
@@ -21,14 +18,11 @@ body{font-family:"Segoe UI",system-ui,-apple-system,Roboto,sans-serif;
   color:var(--text);height:100vh;overflow:hidden}
 .hidden{display:none!important}
 
-/* LOGIN */
 .login-screen{height:100vh;display:flex;align-items:center;justify-content:center;padding:16px}
 .login-card{width:400px;max-width:94vw;background:linear-gradient(160deg,var(--bg2),var(--bg3));
-  border:1px solid #2a2e4d;border-radius:20px;padding:34px 30px;text-align:center;
-  box-shadow:0 30px 80px rgba(0,0,0,.5)}
+  border:1px solid #2a2e4d;border-radius:20px;padding:34px 30px;text-align:center;box-shadow:0 30px 80px rgba(0,0,0,.5)}
 .logo-big{font-size:54px}
-.login-card h1{margin:6px 0 4px;font-size:30px;
-  background:linear-gradient(90deg,var(--accent),var(--accent2));
+.login-card h1{margin:6px 0 4px;font-size:30px;background:linear-gradient(90deg,var(--accent),var(--accent2));
   -webkit-background-clip:text;background-clip:text;color:transparent}
 .subtitle{color:var(--muted);font-size:13px;margin-bottom:22px}
 label{display:block;text-align:left;font-size:12px;color:var(--muted);margin-bottom:6px}
@@ -42,16 +36,15 @@ label{display:block;text-align:left;font-size:12px;color:var(--muted);margin-bot
 .btn:hover{filter:brightness(1.08)}.btn:active{transform:scale(.97)}
 .btn.small{width:auto;padding:10px 14px;font-size:13px}
 .btn.ghost{background:#23264a;color:var(--text)}
+.btn.danger{background:linear-gradient(135deg,#ff5c72,#ff7a5c)}
 
-/* APP */
 .app{display:grid;grid-template-columns:330px 1fr;height:100vh}
 .sidebar{background:linear-gradient(180deg,var(--bg2),#11131f);border-right:1px solid #232742;
   padding:16px;display:flex;flex-direction:column;overflow:hidden}
 .me{display:flex;align-items:center;gap:12px;background:#0f1120;border:1px solid #262a47;
   border-radius:14px;padding:10px 12px;position:relative}
-.avatar{width:44px;height:44px;border-radius:12px;
-  background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;
-  justify-content:center;font-weight:700;font-size:19px;color:#fff;flex-shrink:0;text-transform:uppercase}
+.avatar{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent2));
+  display:flex;align-items:center;justify-content:center;font-weight:700;font-size:19px;color:#fff;flex-shrink:0;text-transform:uppercase}
 .avatar.small{width:38px;height:38px;border-radius:10px;font-size:16px}
 .me-info{flex:1;min-width:0}
 .me-name{font-weight:600;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -65,8 +58,8 @@ label{display:block;text-align:left;font-size:12px;color:var(--muted);margin-bot
 .conn-dot.error{background:var(--danger);box-shadow:0 0 8px var(--danger)}
 
 .tabs{display:flex;gap:6px;margin:14px 0 8px}
-.tab{flex:1;text-align:center;padding:8px;border-radius:9px;font-size:12px;font-weight:600;
-  cursor:pointer;background:#0e1020;border:1px solid #262a47;color:var(--muted)}
+.tab{flex:1;text-align:center;padding:8px;border-radius:9px;font-size:12px;font-weight:600;cursor:pointer;
+  background:#0e1020;border:1px solid #262a47;color:var(--muted)}
 .tab.active{background:#23264a;color:var(--text);border-color:#3a3f6b}
 
 .add-friend{display:flex;gap:8px;margin:6px 0}
@@ -75,23 +68,19 @@ label{display:block;text-align:left;font-size:12px;color:var(--muted);margin-bot
 .add-friend input:focus{border-color:var(--accent)}
 
 .invite-box{background:#0e1020;border:1px solid #262a47;border-radius:12px;padding:10px;margin:6px 0;font-size:12px}
-.invite-box textarea{width:100%;height:64px;resize:none;background:#080912;border:1px solid #262a47;
+.invite-box textarea{width:100%;height:60px;resize:none;background:#080912;border:1px solid #262a47;
   border-radius:8px;color:var(--text);font-size:11px;padding:8px;margin:6px 0;font-family:monospace}
-.invite-box .row{display:flex;gap:6px}
-.invite-box .btn.small{flex:1}
+.invite-box .row{display:flex;gap:6px}.invite-box .btn.small{flex:1}
 
-.section-title{font-size:11px;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);
-  margin:14px 4px 8px;font-weight:700}
+.section-title{font-size:11px;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);margin:14px 4px 8px;font-weight:700}
 .requests{background:#181a2e;border:1px solid #2c2f52;border-radius:12px;padding:8px;margin-top:8px}
 .request-item{display:flex;align-items:center;gap:8px;padding:8px;border-radius:10px}
-.ri-info{flex:1;min-width:0}.ri-name{font-size:13px;font-weight:600}
-.ri-id{font-size:10px;color:var(--muted)}
+.ri-info{flex:1;min-width:0}.ri-name{font-size:13px;font-weight:600}.ri-id{font-size:10px;color:var(--muted)}
 .req-btn{border:none;border-radius:8px;padding:6px 8px;cursor:pointer;font-size:12px;font-weight:600}
 .req-accept{background:var(--online);color:#06210f}.req-decline{background:#2c2f52;color:var(--muted)}
 
 .friends-list{flex:1;overflow-y:auto;margin:0 -4px;padding:0 4px}
-.friend-item{display:flex;align-items:center;gap:11px;padding:9px 10px;border-radius:12px;cursor:pointer;
-  margin-bottom:4px;transition:background .12s}
+.friend-item{display:flex;align-items:center;gap:11px;padding:9px 10px;border-radius:12px;cursor:pointer;margin-bottom:4px;transition:background .12s}
 .friend-item:hover{background:#1b1e34}.friend-item.active{background:#23264a}
 .fi-info{flex:1;min-width:0}
 .fi-name{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -99,39 +88,68 @@ label{display:block;text-align:left;font-size:12px;color:var(--muted);margin-bot
 .status-dot{width:8px;height:8px;border-radius:50%;background:var(--offline);flex-shrink:0}
 .status-dot.online{background:var(--online);box-shadow:0 0 6px var(--online)}
 .status-dot.connected{background:var(--accent2);box-shadow:0 0 6px var(--accent2)}
-.unread-badge{background:var(--danger);color:#fff;font-size:10px;font-weight:700;min-width:18px;
-  height:18px;border-radius:9px;padding:0 5px;display:flex;align-items:center;justify-content:center}
+.unread-badge{background:var(--danger);color:#fff;font-size:10px;font-weight:700;min-width:18px;height:18px;
+  border-radius:9px;padding:0 5px;display:flex;align-items:center;justify-content:center}
 .sidebar-foot{text-align:center;color:#4a4f6b;margin-top:10px}
 
-.chat-area{display:flex;flex-direction:column;height:100vh;overflow:hidden}
-.empty-state{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  text-align:center;color:var(--muted);padding:40px}
+.chat-area{display:flex;flex-direction:column;height:100vh;overflow:hidden;position:relative}
+.empty-state{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:var(--muted);padding:40px}
 .empty-emoji{font-size:60px;margin-bottom:10px;opacity:.8}
-.empty-state h2{color:var(--text);font-weight:600;margin-bottom:8px}
-.empty-state p{max-width:380px;line-height:1.5;font-size:14px}
+.empty-state h2{color:var(--text);font-weight:600;margin-bottom:8px}.empty-state p{max-width:380px;line-height:1.5;font-size:14px}
 .chat-panel{flex:1;display:flex;flex-direction:column;height:100vh;overflow:hidden}
 .chat-header{display:flex;align-items:center;gap:12px;padding:14px 20px;border-bottom:1px solid #232742}
 .chat-title{font-weight:600;font-size:16px}
-.chat-status{font-size:12px;color:var(--muted)}
-.chat-status.connected{color:var(--accent2)}.chat-status.online{color:var(--online)}
+.chat-status{font-size:12px;color:var(--muted)}.chat-status.connected{color:var(--accent2)}.chat-status.online{color:var(--online)}
+.header-actions{margin-left:auto;display:flex;gap:8px}
+.icon-btn{background:#23264a;border:1px solid #343a63;color:var(--text);width:40px;height:40px;border-radius:10px;
+  cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center}
+.icon-btn:hover{background:#2c3060}.icon-btn:disabled{opacity:.4;cursor:not-allowed}
+
 .messages{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:8px}
-.msg{max-width:70%;padding:9px 13px;border-radius:14px;font-size:14px;line-height:1.4;word-wrap:break-word}
+.msg{max-width:72%;padding:9px 13px;border-radius:14px;font-size:14px;line-height:1.4;word-wrap:break-word}
 .msg .time{font-size:10px;opacity:.65;margin-top:3px;display:block;text-align:right}
 .msg.me{align-self:flex-end;background:var(--bubble-me);color:#fff;border-bottom-right-radius:4px}
 .msg.them{align-self:flex-start;background:var(--bubble-them);border-bottom-left-radius:4px}
-.msg.system{align-self:center;background:transparent;color:var(--muted);font-size:12px;
-  font-style:italic;max-width:90%;text-align:center}
-.composer{display:flex;gap:10px;padding:14px 20px;border-top:1px solid #232742}
-.composer input{flex:1;padding:12px 16px;border-radius:12px;border:1px solid #303558;
-  background:#0e1020;color:var(--text);font-size:14px;outline:none}
-.composer input:focus{border-color:var(--accent)}
-.composer input:disabled{opacity:.5}
+.msg.system{align-self:center;background:transparent;color:var(--muted);font-size:12px;font-style:italic;max-width:90%;text-align:center}
+.msg img,.msg video{max-width:100%;border-radius:10px;display:block;margin-bottom:4px;max-height:340px}
+.msg .file-name{font-size:11px;opacity:.8}
+.msg .progress{height:5px;background:rgba(255,255,255,.2);border-radius:3px;overflow:hidden;margin-top:5px}
+.msg .progress > i{display:block;height:100%;background:#fff;width:0}
+.dl-link{color:#cfe0ff;font-size:12px;text-decoration:underline;cursor:pointer}
+
+.composer{display:flex;gap:8px;padding:12px 16px;border-top:1px solid #232742;align-items:center;position:relative}
+.composer input[type=text]{flex:1;padding:12px 16px;border-radius:12px;border:1px solid #303558;background:#0e1020;color:var(--text);font-size:14px;outline:none}
+.composer input[type=text]:focus{border-color:var(--accent)}
+.composer input[type=text]:disabled{opacity:.5}
 .composer .btn{width:auto;padding:12px 18px}
+.comp-btn{background:#23264a;border:1px solid #343a63;color:var(--text);width:42px;height:42px;border-radius:11px;cursor:pointer;font-size:18px;flex-shrink:0}
+.comp-btn:hover{background:#2c3060}.comp-btn:disabled{opacity:.4;cursor:not-allowed}
+
+.emoji-panel{position:absolute;bottom:64px;left:16px;width:300px;max-height:220px;overflow-y:auto;
+  background:#181a2e;border:1px solid #343a63;border-radius:14px;padding:8px;display:grid;
+  grid-template-columns:repeat(8,1fr);gap:2px;box-shadow:0 12px 40px rgba(0,0,0,.5);z-index:50}
+.emoji-panel span{font-size:22px;text-align:center;cursor:pointer;border-radius:8px;padding:4px 0}
+.emoji-panel span:hover{background:#2c3060}
+
+/* CALL overlay */
+.call-overlay{position:absolute;inset:0;background:rgba(8,9,18,.97);z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px}
+.call-title{font-size:18px;margin-bottom:6px}
+.call-sub{color:var(--muted);font-size:13px;margin-bottom:18px}
+.video-wrap{position:relative;width:100%;max-width:820px;flex:1;display:flex;align-items:center;justify-content:center}
+#remoteVideo{width:100%;max-height:60vh;border-radius:16px;background:#000;object-fit:contain}
+#localVideo{position:absolute;bottom:12px;right:12px;width:180px;max-width:34vw;border-radius:12px;background:#000;border:2px solid #343a63;object-fit:cover}
+.call-avatar{width:120px;height:120px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));
+  display:flex;align-items:center;justify-content:center;font-size:48px;color:#fff;margin-bottom:16px}
+.call-controls{display:flex;gap:14px;margin-top:20px}
+.call-ctrl{width:58px;height:58px;border-radius:50%;border:none;cursor:pointer;font-size:22px;color:#fff;background:#23264a}
+.call-ctrl:hover{filter:brightness(1.15)}
+.call-ctrl.off{background:#3a2030}
+.call-ctrl.hang{background:linear-gradient(135deg,#ff5c72,#ff3b5c)}
+.call-ctrl.accept{background:linear-gradient(135deg,#4ade80,#22c55e);color:#06210f}
 
 .toasts{position:fixed;top:20px;right:20px;display:flex;flex-direction:column;gap:10px;z-index:999}
-.toast{background:#1d2038;border:1px solid #343a63;border-left:3px solid var(--accent);
-  padding:12px 16px;border-radius:12px;font-size:13px;min-width:240px;max-width:340px;
-  box-shadow:0 12px 40px rgba(0,0,0,.4);animation:slidein .25s ease}
+.toast{background:#1d2038;border:1px solid #343a63;border-left:3px solid var(--accent);padding:12px 16px;border-radius:12px;
+  font-size:13px;min-width:240px;max-width:340px;box-shadow:0 12px 40px rgba(0,0,0,.4);animation:slidein .25s ease}
 .toast.ok{border-left-color:var(--online)}.toast.err{border-left-color:var(--danger)}
 @keyframes slidein{from{transform:translateX(40px);opacity:0}to{transform:translateX(0);opacity:1}}
 @media(max-width:720px){.app{grid-template-columns:1fr}.sidebar{display:none}}
@@ -139,21 +157,18 @@ label{display:block;text-align:left;font-size:12px;color:var(--muted);margin-bot
 </head>
 <body>
 
-<!-- ВХОД -->
 <div id="loginScreen" class="login-screen">
   <div class="login-card">
     <div class="logo-big">🌌</div>
     <h1>NebulaChat</h1>
-    <p class="subtitle">P2P мессенджер • без своего сервера • работает на GitHub Pages</p>
+    <p class="subtitle">P2P мессенджер • эмодзи • файлы • видео • звонки</p>
     <label>Ваше имя</label>
     <input id="nameInput" type="text" placeholder="Например, Алекс" maxlength="40" />
     <button id="enterBtn" class="btn">Войти</button>
-    <p class="hint">Сообщения идут <b>напрямую</b> между вами и другом (peer-to-peer, WebRTC).
-    Режим «по ID» использует бесплатный публичный брокер PeerJS только для знакомства.</p>
+    <p class="hint">Всё идёт <b>напрямую</b> между вами и другом (P2P, WebRTC). Без своего сервера.</p>
   </div>
 </div>
 
-<!-- ПРИЛОЖЕНИЕ -->
 <div id="app" class="app hidden">
   <aside class="sidebar">
     <div class="me">
@@ -161,8 +176,7 @@ label{display:block;text-align:left;font-size:12px;color:var(--muted);margin-bot
       <div class="me-info">
         <div class="me-name" id="myName">—</div>
         <div class="me-id">ID:&nbsp;<b id="myId">подключение…</b>
-          <button id="copyIdBtn" class="mini-btn" title="Скопировать ID">⧉</button>
-        </div>
+          <button id="copyIdBtn" class="mini-btn" title="Скопировать ID">⧉</button></div>
       </div>
       <span id="connDot" class="conn-dot offline" title="Связь с брокером"></span>
     </div>
@@ -172,7 +186,6 @@ label{display:block;text-align:left;font-size:12px;color:var(--muted);margin-bot
       <div class="tab" id="tabCode" data-mode="code">По коду</div>
     </div>
 
-    <!-- режим по ID -->
     <div id="modeId">
       <div class="add-friend">
         <input id="friendIdInput" type="text" placeholder="ID друга, напр. nb-3f9k7" />
@@ -180,33 +193,21 @@ label{display:block;text-align:left;font-size:12px;color:var(--muted);margin-bot
       </div>
     </div>
 
-    <!-- режим по коду (offline, без брокера) -->
     <div id="modeCode" class="hidden">
-      <div class="invite-box">
-        <b>1) Создать приглашение</b> (если вы инициатор):
+      <div class="invite-box"><b>1) Создать приглашение</b>:
         <textarea id="offerOut" placeholder="Нажмите «Создать код»…" readonly></textarea>
-        <div class="row">
-          <button id="makeOfferBtn" class="btn small">Создать код</button>
-          <button id="copyOfferBtn" class="btn small ghost">Копировать</button>
-        </div>
-      </div>
-      <div class="invite-box">
-        <b>2) Вставить код друга</b> и подключиться:
-        <textarea id="remoteIn" placeholder="Вставьте сюда код, полученный от друга…"></textarea>
-        <div class="row">
-          <button id="acceptCodeBtn" class="btn small">Подключиться</button>
-        </div>
-      </div>
-      <div class="invite-box">
-        <b>3) Ваш ответный код</b> (если вам прислали приглашение) — отдайте его другу:
+        <div class="row"><button id="makeOfferBtn" class="btn small">Создать код</button>
+        <button id="copyOfferBtn" class="btn small ghost">Копировать</button></div></div>
+      <div class="invite-box"><b>2) Вставить код друга</b>:
+        <textarea id="remoteIn" placeholder="Код от друга…"></textarea>
+        <div class="row"><button id="acceptCodeBtn" class="btn small">Подключиться</button></div></div>
+      <div class="invite-box"><b>3) Ваш ответный код</b> — отдайте другу:
         <textarea id="answerOut" placeholder="Появится после «Подключиться»…" readonly></textarea>
-        <button id="copyAnswerBtn" class="btn small ghost" style="width:100%">Копировать ответ</button>
-      </div>
+        <button id="copyAnswerBtn" class="btn small ghost" style="width:100%">Копировать ответ</button></div>
     </div>
 
     <div id="requestsBlock" class="requests hidden">
-      <div class="section-title">Заявки в друзья</div>
-      <div id="requestsList"></div>
+      <div class="section-title">Заявки в друзья</div><div id="requestsList"></div>
     </div>
 
     <div class="section-title">Друзья</div>
@@ -218,9 +219,9 @@ label{display:block;text-align:left;font-size:12px;color:var(--muted);margin-bot
     <div id="emptyState" class="empty-state">
       <div class="empty-emoji">💬</div>
       <h2>Выберите друга, чтобы начать чат</h2>
-      <p>Добавьте друга по ID (вкладка «По ID») или обменяйтесь кодом (вкладка «По коду»).
-      После принятия заявки соединение установится автоматически.</p>
+      <p>Добавьте друга по ID или коду. После подключения доступны эмодзи, фото, видео и звонки 📞🎥</p>
     </div>
+
     <div id="chatPanel" class="chat-panel hidden">
       <header class="chat-header">
         <div class="avatar small" id="chatAvatar">?</div>
@@ -228,12 +229,34 @@ label{display:block;text-align:left;font-size:12px;color:var(--muted);margin-bot
           <div class="chat-title" id="chatTitle">—</div>
           <div class="chat-status" id="chatStatus">оффлайн</div>
         </div>
+        <div class="header-actions">
+          <button id="callAudioBtn" class="icon-btn" title="Аудиозвонок" disabled>📞</button>
+          <button id="callVideoBtn" class="icon-btn" title="Видеозвонок" disabled>🎥</button>
+        </div>
       </header>
       <div id="messages" class="messages"></div>
       <div class="composer">
+        <button id="emojiBtn" class="comp-btn" title="Эмодзи">😀</button>
+        <button id="attachBtn" class="comp-btn" title="Фото/видео/файл">📎</button>
+        <input id="fileInput" type="file" accept="image/*,video/*" multiple class="hidden" />
         <input id="msgInput" type="text" placeholder="Напишите сообщение…" autocomplete="off" />
         <button id="sendBtn" class="btn">▶</button>
+        <div id="emojiPanel" class="emoji-panel hidden"></div>
       </div>
+    </div>
+
+    <!-- ЗВОНОК -->
+    <div id="callOverlay" class="call-overlay hidden">
+      <div id="callIncoming">
+        <div class="call-avatar" id="callAvatar">?</div>
+        <div class="call-title" id="callTitle">Звонок…</div>
+        <div class="call-sub" id="callSub">Входящий вызов</div>
+      </div>
+      <div id="callActive" class="video-wrap hidden">
+        <video id="remoteVideo" autoplay playsinline></video>
+        <video id="localVideo" autoplay playsinline muted></video>
+      </div>
+      <div class="call-controls" id="callControls"></div>
     </div>
   </main>
 </div>
@@ -242,46 +265,49 @@ label{display:block;text-align:left;font-size:12px;color:var(--muted);margin-bot
 
 <script>
 (()=>{"use strict";
-/* ============================================================
-   NebulaChat — единый файл, без своего сервера.
-   Режим A (по ID): PeerJS публичный брокер -> P2P DataChannel.
-   Режим B (по коду): чистый WebRTC, обмен offer/answer вручную.
-   ============================================================ */
+/* ===========================================================
+   NebulaChat — P2P: чат, эмодзи, файлы (фото/видео до 289 МБ),
+   аудио/видео звонки. Режим по ID (PeerJS) + по коду (ручной).
+   =========================================================== */
 
+const MAX_FILE = 289*1024*1024;          // 289 МБ
+const CHUNK = 16*1024;                    // размер чанка передачи файла
 const ICE={iceServers:[
   {urls:"stun:stun.l.google.com:19302"},
-  {urls:"stun:stun1.l.google.com:19302"}
+  {urls:"stun:stun1.l.google.com:19302"},
+  // публичные TURN (помогают при строгом NAT/firewall — "как в Стиме")
+  {urls:"turn:openrelay.metered.ca:80",username:"openrelayproject",credential:"openrelayproject"},
+  {urls:"turn:openrelay.metered.ca:443",username:"openrelayproject",credential:"openrelayproject"},
+  {urls:"turn:openrelay.metered.ca:443?transport=tcp",username:"openrelayproject",credential:"openrelayproject"}
 ]};
 
 const state={
-  myName:"", myId:null, peer:null, mode:"id",
-  friends:{},      // id -> {id,name,online,connected}
-  conns:{},        // id -> PeerJS DataConnection
-  manualPC:null,   // RTCPeerConnection для режима по коду
-  manualChan:null,
-  history:{},      // id -> [{dir,text,t}]
-  activeChat:null, unread:{}, pending:{}
+  myName:"",myId:null,peer:null,mode:"id",
+  friends:{},conns:{},                   // conns: id -> {send(obj), peer, _manual?}
+  manualPC:null,manualChan:null,
+  history:{},activeChat:null,unread:{},pending:{},
+  rx:{},                                 // приём файлов: key -> {meta, chunks[], received}
+  call:null                              // {id, pc, localStream, remoteStream, video, role}
 };
 
 const $=id=>document.getElementById(id);
-const E={
-  loginScreen:$("loginScreen"),nameInput:$("nameInput"),enterBtn:$("enterBtn"),app:$("app"),
-  myAvatar:$("myAvatar"),myName:$("myName"),myId:$("myId"),copyIdBtn:$("copyIdBtn"),connDot:$("connDot"),
-  tabId:$("tabId"),tabCode:$("tabCode"),modeId:$("modeId"),modeCode:$("modeCode"),
-  friendIdInput:$("friendIdInput"),addFriendBtn:$("addFriendBtn"),
-  offerOut:$("offerOut"),makeOfferBtn:$("makeOfferBtn"),copyOfferBtn:$("copyOfferBtn"),
-  remoteIn:$("remoteIn"),acceptCodeBtn:$("acceptCodeBtn"),
-  answerOut:$("answerOut"),copyAnswerBtn:$("copyAnswerBtn"),
-  requestsBlock:$("requestsBlock"),requestsList:$("requestsList"),
-  friendsList:$("friendsList"),emptyState:$("emptyState"),chatPanel:$("chatPanel"),
-  chatAvatar:$("chatAvatar"),chatTitle:$("chatTitle"),chatStatus:$("chatStatus"),
-  messages:$("messages"),msgInput:$("msgInput"),sendBtn:$("sendBtn"),toasts:$("toasts")
-};
+const E={};["loginScreen","nameInput","enterBtn","app","myAvatar","myName","myId","copyIdBtn","connDot",
+"tabId","tabCode","modeId","modeCode","friendIdInput","addFriendBtn","offerOut","makeOfferBtn","copyOfferBtn",
+"remoteIn","acceptCodeBtn","answerOut","copyAnswerBtn","requestsBlock","requestsList","friendsList","emptyState",
+"chatPanel","chatAvatar","chatTitle","chatStatus","callAudioBtn","callVideoBtn","messages","emojiBtn","attachBtn",
+"fileInput","msgInput","sendBtn","emojiPanel","callOverlay","callIncoming","callActive","callAvatar","callTitle",
+"callSub","callControls","remoteVideo","localVideo","toasts"].forEach(k=>E[k]=$(k));
 
 /* ---------- утилиты ---------- */
-const STORE="nebulachat_single_v1";
-function save(){try{localStorage.setItem(STORE,JSON.stringify(
-  {myName:state.myName,friends:state.friends,history:state.history}));}catch(e){}}
+const STORE="nebulachat_pro_v1";
+function save(){try{
+  // не сохраняем тяжёлые data-url медиа в localStorage (только текст/системные)
+  const slimHist={};
+  Object.entries(state.history).forEach(([id,arr])=>{
+    slimHist[id]=arr.filter(m=>m.kind!=="file").map(m=>({dir:m.dir,kind:m.kind,text:m.text,t:m.t}));
+  });
+  localStorage.setItem(STORE,JSON.stringify({myName:state.myName,friends:state.friends,history:slimHist}));
+}catch(e){}}
 function load(){try{const d=JSON.parse(localStorage.getItem(STORE)||"{}");
   state.myName=d.myName||"";
   Object.values(d.friends||{}).forEach(f=>state.friends[f.id]={id:f.id,name:f.name,online:false,connected:false});
@@ -289,316 +315,351 @@ function load(){try{const d=JSON.parse(localStorage.getItem(STORE)||"{}");
 const initials=n=>((n||"?").trim()[0]||"?").toUpperCase();
 const now=()=>{const d=new Date();return String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0");};
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const fmtSize=b=>b<1024?b+" Б":b<1048576?(b/1024).toFixed(1)+" КБ":(b/1048576).toFixed(1)+" МБ";
 function toast(msg,kind=""){const el=document.createElement("div");el.className="toast "+kind;el.textContent=msg;
   E.toasts.appendChild(el);setTimeout(()=>{el.style.opacity="0";el.style.transform="translateX(40px)";
   el.style.transition="all .25s";setTimeout(()=>el.remove(),250);},3800);}
+const uid=()=>Math.random().toString(36).slice(2,10);
 
-/* ============================================================
+/* ===========================================================
    РЕЖИМ A — по ID (PeerJS)
-   ============================================================ */
+   =========================================================== */
 function startPeer(){
-  if(typeof Peer==="undefined"){
-    E.connDot.className="conn-dot error";
-    toast("Брокер PeerJS не загрузился (нет интернета/превью). Используйте режим «По коду».","err");
-    return;
-  }
-  // короткий понятный ID
+  if(typeof Peer==="undefined"){E.connDot.className="conn-dot error";
+    toast("Брокер PeerJS не загрузился. Используйте режим «По коду».","err");return;}
   const myid="nb-"+Math.random().toString(36).slice(2,8);
-  const peer=new Peer(myid,{debug:1});
+  const peer=new Peer(myid,{debug:1,config:ICE});  // важно: ICE с TURN внутрь PeerJS
   state.peer=peer;
-
-  peer.on("open",id=>{
-    state.myId=id; E.myId.textContent=id;
-    E.connDot.className="conn-dot online";
-  });
+  peer.on("open",id=>{state.myId=id;E.myId.textContent=id;E.connDot.className="conn-dot online";});
   peer.on("error",err=>{
-    if(err.type==="unavailable-id"){ // редкая коллизия — пробуем заново
-      startPeer(); return;
-    }
-    if(err.type==="peer-unavailable"){
-      toast("Пользователь с таким ID не найден или оффлайн.","err"); return;
-    }
+    if(err.type==="unavailable-id"){startPeer();return;}
+    if(err.type==="peer-unavailable"){toast("Пользователь с таким ID не найден/оффлайн.","err");return;}
+    if(err.type==="network"||err.type==="server-error"){E.connDot.className="conn-dot error";
+      toast("Брокер недоступен. Попробуйте режим «По коду».","err");return;}
     E.connDot.className="conn-dot error";
   });
-  peer.on("disconnected",()=>{E.connDot.className="conn-dot offline";peer.reconnect&&peer.reconnect();});
-
-  // входящее соединение
+  peer.on("disconnected",()=>{E.connDot.className="conn-dot offline";try{peer.reconnect();}catch(e){}});
   peer.on("connection",conn=>bindConn(conn,false));
+  peer.on("call",mc=>incomingCall(mc));      // входящий медиа-звонок
 }
 
-// первый пакет по новому соединению — рукопожатие с именем/намерением
 function bindConn(conn,isOutgoing){
-  conn.on("open",()=>{
-    // представимся
-    conn.send({k:"hello",name:state.myName});
-  });
+  conn.on("open",()=>conn.send({k:"hello",name:state.myName}));
   conn.on("data",data=>handleConnData(conn,data));
   conn.on("close",()=>peerDisconnected(conn.peer));
   conn.on("error",()=>peerDisconnected(conn.peer));
 }
-
 function handleConnData(conn,data){
-  const from=conn.peer;
-  if(!data||typeof data!=="object")return;
-
-  if(data.k==="hello"){
-    // если это известный друг — это переподключение; иначе — входящая заявка
-    if(state.friends[from]){
-      registerConn(from,conn,data.name);
-    }else{
-      // показываем заявку в друзья
-      state.pending[from]={name:data.name||"Друг",conn};
-      renderRequests();
-      toast("Новая заявка в друзья от "+(data.name||"Друг"),"");
-    }
-  }else if(data.k==="accept"){
-    // нашу заявку приняли
-    registerConn(from,conn,data.name);
-    addFriend(from,data.name,true);
-    toast((data.name||"Друг")+" принял заявку! 🔗 Подключено.","ok");
-  }else if(data.k==="decline"){
-    toast("Заявку отклонили.","err");
-    try{conn.close();}catch(e){}
-  }else if(data.k==="msg"){
-    receiveMessage(from,data.text);
-  }else if(data.k==="name"){
-    if(state.friends[from]){state.friends[from].name=data.name;renderFriends();updateHeader();save();}
+  const from=conn.peer;if(!data||typeof data!=="object")return;
+  switch(data.k){
+    case "hello":
+      if(state.friends[from])registerConn(from,conn,data.name);
+      else{state.pending[from]={name:data.name||"Друг",conn};renderRequests();
+        toast("Новая заявка от "+(data.name||"Друг"),"");}break;
+    case "accept":registerConn(from,conn,data.name);addFriend(from,data.name,true);
+      toast((data.name||"Друг")+" принял заявку! 🔗","ok");break;
+    case "decline":toast("Заявку отклонили.","err");try{conn.close();}catch(e){}break;
+    case "msg":receiveMessage(from,data.text);break;
+    case "name":if(state.friends[from]){state.friends[from].name=data.name;renderFriends();updateHeader();save();}break;
+    case "file-meta":fileMetaIn(from,data);break;
+    case "file-chunk":fileChunkIn(from,data);break;
+    case "file-end":fileEndIn(from,data);break;
   }
 }
-
 function registerConn(id,conn,name){
-  state.conns[id]=conn;
-  if(state.friends[id]){state.friends[id].connected=true;state.friends[id].online=true;
-    if(name)state.friends[id].name=name;}
-  pushSystem(id,"🔗 P2P-соединение установлено");
-  renderFriends();updateHeader();save();
+  state.conns[id]={peer:id,send:o=>{try{conn.send(o);}catch(e){}},raw:conn};
+  if(state.friends[id]){state.friends[id].connected=true;state.friends[id].online=true;if(name)state.friends[id].name=name;}
+  pushSystem(id,"🔗 P2P-соединение установлено");renderFriends();updateHeader();save();
 }
-
-// добавить друга по ID (исходящая заявка)
 function addFriendById(){
-  const id=E.friendIdInput.value.trim().toLowerCase();
-  if(!id)return;
-  if(id===state.myId){toast("Нельзя добавить самого себя 🙂","err");return;}
+  const id=E.friendIdInput.value.trim().toLowerCase();if(!id)return;
+  if(id===state.myId){toast("Нельзя добавить себя 🙂","err");return;}
   if(state.friends[id]){toast("Уже в друзьях.");openChat(id);E.friendIdInput.value="";return;}
-  if(!state.peer){toast("Нет связи с брокером. Режим «По коду».","err");return;}
+  if(!state.peer){toast("Нет связи с брокером.","err");return;}
   toast("Отправляем заявку…","");
-  const conn=state.peer.connect(id,{reliable:true});
-  bindConn(conn,true);
-  E.friendIdInput.value="";
+  const conn=state.peer.connect(id,{reliable:true});bindConn(conn,true);E.friendIdInput.value="";
 }
 
-/* ---------- заявки ---------- */
 function renderRequests(){
   const ids=Object.keys(state.pending);
   if(!ids.length){E.requestsBlock.classList.add("hidden");return;}
   E.requestsBlock.classList.remove("hidden");E.requestsList.innerHTML="";
-  ids.forEach(from=>{
-    const p=state.pending[from];
-    const it=document.createElement("div");it.className="request-item";
+  ids.forEach(from=>{const p=state.pending[from];const it=document.createElement("div");it.className="request-item";
     it.innerHTML=`<div class="avatar small">${initials(p.name)}</div>
-      <div class="ri-info"><div class="ri-name">${esc(p.name)}</div><div class="ri-id">${from}</div></div>
-      <button class="req-btn req-accept">✓</button><button class="req-btn req-decline">✕</button>`;
+    <div class="ri-info"><div class="ri-name">${esc(p.name)}</div><div class="ri-id">${from}</div></div>
+    <button class="req-btn req-accept">✓</button><button class="req-btn req-decline">✕</button>`;
     it.querySelector(".req-accept").onclick=()=>acceptReq(from);
-    it.querySelector(".req-decline").onclick=()=>declineReq(from);
-    E.requestsList.appendChild(it);
-  });
+    it.querySelector(".req-decline").onclick=()=>declineReq(from);E.requestsList.appendChild(it);});
 }
-function acceptReq(from){
-  const p=state.pending[from];if(!p)return;
-  addFriend(from,p.name,true);
-  try{p.conn.send({k:"accept",name:state.myName});}catch(e){}
-  registerConn(from,p.conn,p.name);
-  delete state.pending[from];renderRequests();
-}
-function declineReq(from){
-  const p=state.pending[from];if(p){try{p.conn.send({k:"decline"});p.conn.close();}catch(e){}}
-  delete state.pending[from];renderRequests();
-}
+function acceptReq(from){const p=state.pending[from];if(!p)return;addFriend(from,p.name,true);
+  try{p.conn.send({k:"accept",name:state.myName});}catch(e){}registerConn(from,p.conn,p.name);
+  delete state.pending[from];renderRequests();}
+function declineReq(from){const p=state.pending[from];if(p){try{p.conn.send({k:"decline"});p.conn.close();}catch(e){}}
+  delete state.pending[from];renderRequests();}
 
-/* ============================================================
-   РЕЖИМ B — по коду (чистый WebRTC, без брокера)
-   ============================================================ */
-function pack(obj){return btoa(unescape(encodeURIComponent(JSON.stringify(obj))));}
-function unpack(str){return JSON.parse(decodeURIComponent(escape(atob(str.trim()))));}
-
+/* ===========================================================
+   РЕЖИМ B — по коду (ручной WebRTC) — для надёжного fallback
+   =========================================================== */
+function pack(o){return btoa(unescape(encodeURIComponent(JSON.stringify(o))));}
+function unpack(s){return JSON.parse(decodeURIComponent(escape(atob(s.trim()))));}
 async function makeOffer(){
   const pc=new RTCPeerConnection(ICE);state.manualPC=pc;
-  const chan=pc.createDataChannel("chat");setupManualChan(chan);
-  pc.onicecandidate=e=>{ if(!e.candidate){ // ICE завершён — отдаём полный offer
-    E.offerOut.value=pack({sdp:pc.localDescription,name:state.myName,id:"code-"+Math.random().toString(36).slice(2,7)});}};
-  const offer=await pc.createOffer();await pc.setLocalDescription(offer);
-  E.offerOut.value="(собираем сетевые кандидаты, подождите 1-2 сек…)";
-  toast("Код создаётся, подождите пару секунд…","");
+  const chan=pc.createDataChannel("chat");chan.binaryType="arraybuffer";setupManualChan(chan);
+  pc.onicecandidate=e=>{if(!e.candidate)E.offerOut.value=pack({sdp:pc.localDescription,name:state.myName,id:"code-"+uid()});};
+  await pc.setLocalDescription(await pc.createOffer());
+  E.offerOut.value="(собираем кандидаты, подождите 1-2 сек…)";toast("Код создаётся…","");
 }
-
 async function acceptCode(){
-  const raw=E.remoteIn.value.trim();
-  if(!raw){toast("Вставьте код друга.","err");return;}
+  const raw=E.remoteIn.value.trim();if(!raw){toast("Вставьте код.","err");return;}
   let data;try{data=unpack(raw);}catch(e){toast("Код повреждён.","err");return;}
-
   if(data.sdp.type==="offer"){
-    // нам прислали приглашение -> создаём ответ
-    const pc=new RTCPeerConnection(ICE);state.manualPC=pc;
-    const fid=data.id||("code-"+Math.random().toString(36).slice(2,7));
-    pc.ondatachannel=e=>{setupManualChan(e.channel,fid,data.name);};
-    pc.onicecandidate=e=>{ if(!e.candidate){
-      E.answerOut.value=pack({sdp:pc.localDescription,name:state.myName,id:state.myId||"me"});}};
+    const pc=new RTCPeerConnection(ICE);state.manualPC=pc;const fid=data.id||"code-"+uid();
+    pc.ondatachannel=e=>{e.channel.binaryType="arraybuffer";setupManualChan(e.channel,fid,data.name);};
+    pc.onicecandidate=e=>{if(!e.candidate)E.answerOut.value=pack({sdp:pc.localDescription,name:state.myName,id:state.myId||"me"});};
     await pc.setRemoteDescription(new RTCSessionDescription(data.sdp));
-    const ans=await pc.createAnswer();await pc.setLocalDescription(ans);
-    addFriend(fid,data.name||"Друг",true);
-    E.answerOut.value="(готовим ответный код…)";
-    toast("Готовим ответный код — скопируйте его другу (шаг 3).","ok");
+    await pc.setLocalDescription(await pc.createAnswer());
+    addFriend(fid,data.name||"Друг",true);E.answerOut.value="(готовим ответ…)";
+    toast("Скопируйте ответный код другу (шаг 3).","ok");
   }else if(data.sdp.type==="answer"){
-    // мы инициатор и получили ответ
     if(!state.manualPC){toast("Сначала создайте код (шаг 1).","err");return;}
     await state.manualPC.setRemoteDescription(new RTCSessionDescription(data.sdp));
-    const fid=data.id||("code-"+Math.random().toString(36).slice(2,7));
-    state._pendingManualFriend={id:fid,name:data.name||"Друг"};
-    toast("Ответ принят, устанавливаем соединение…","ok");
+    state._pendManual={id:data.id||"code-"+uid(),name:data.name||"Друг"};toast("Ответ принят…","ok");
   }
 }
-
 function setupManualChan(chan,fid,fname){
   state.manualChan=chan;
-  chan.onopen=()=>{
-    let id=fid, name=fname;
-    if(!id && state._pendingManualFriend){id=state._pendingManualFriend.id;name=state._pendingManualFriend.name;}
-    if(!id)id="code-"+Math.random().toString(36).slice(2,7);
-    addFriend(id,name||"Друг",true);
-    state.friends[id].connected=true;
-    state.conns[id]={ _manual:true, send:o=>chan.send(JSON.stringify(o)), peer:id,
-      close:()=>{try{chan.close();}catch(e){}} };
+  chan.onopen=()=>{let id=fid,name=fname;
+    if(!id&&state._pendManual){id=state._pendManual.id;name=state._pendManual.name;}
+    if(!id)id="code-"+uid();addFriend(id,name||"Друг",true);state.friends[id].connected=true;
     chan._fid=id;
-    pushSystem(id,"🔗 P2P-соединение установлено (по коду)");
-    renderFriends();updateHeader();save();
-    toast("Соединение установлено!","ok");
-  };
-  chan.onmessage=e=>{let d;try{d=JSON.parse(e.data);}catch(_){return;}
-    const id=chan._fid; if(!id)return;
-    if(d.k==="msg")receiveMessage(id,d.text);};
+    state.conns[id]={peer:id,_manual:true,send:o=>{try{chan.send(JSON.stringify(o));}catch(e){}},raw:chan};
+    pushSystem(id,"🔗 P2P-соединение установлено (по коду)");renderFriends();updateHeader();save();
+    toast("Соединение установлено!","ok");};
+  chan.onmessage=e=>{let d;try{d=JSON.parse(e.data);}catch(_){return;}const id=chan._fid;if(!id)return;
+    if(d.k==="msg")receiveMessage(id,d.text);
+    else if(d.k==="file-meta")fileMetaIn(id,d);
+    else if(d.k==="file-chunk")fileChunkIn(id,d);
+    else if(d.k==="file-end")fileEndIn(id,d);};
   chan.onclose=()=>{if(chan._fid)peerDisconnected(chan._fid);};
 }
 
-/* ============================================================
-   ОБЩЕЕ: друзья, чат, сообщения
-   ============================================================ */
-function addFriend(id,name,online){
-  if(id===state.myId)return;
+/* ===========================================================
+   ДРУЗЬЯ / ЧАТ / СООБЩЕНИЯ
+   =========================================================== */
+function addFriend(id,name,online){if(id===state.myId)return;
   if(!state.friends[id])state.friends[id]={id,name:name||"Друг",online:!!online,connected:false};
   else{if(name)state.friends[id].name=name;state.friends[id].online=!!online;}
-  if(!state.history[id])state.history[id]=[];
-  renderFriends();save();
-}
-function peerDisconnected(id){
-  delete state.conns[id];
-  if(state.friends[id]){const was=state.friends[id].connected;
-    state.friends[id].connected=false;state.friends[id].online=false;
+  if(!state.history[id])state.history[id]=[];renderFriends();save();}
+function peerDisconnected(id){delete state.conns[id];
+  if(state.friends[id]){const was=state.friends[id].connected;state.friends[id].connected=false;state.friends[id].online=false;
     if(was)pushSystem(id,"⚠️ Соединение разорвано");}
-  renderFriends();updateHeader();
-}
+  if(state.call&&state.call.id===id)endCall(true);renderFriends();updateHeader();}
 
-function renderFriends(){
-  E.friendsList.innerHTML="";
-  const list=Object.values(state.friends);
-  if(!list.length){E.friendsList.innerHTML=`<div style="color:#5a5f78;font-size:12px;padding:10px;text-align:center">Пока нет друзей.<br>Добавьте кого-нибудь.</div>`;return;}
+function renderFriends(){E.friendsList.innerHTML="";const list=Object.values(state.friends);
+  if(!list.length){E.friendsList.innerHTML=`<div style="color:#5a5f78;font-size:12px;padding:10px;text-align:center">Пока нет друзей.</div>`;return;}
   list.sort((a,b)=>(b.connected-a.connected)||(b.online-a.online)||a.name.localeCompare(b.name));
-  list.forEach(f=>{
-    const it=document.createElement("div");
-    it.className="friend-item"+(state.activeChat===f.id?" active":"");
-    const dc=f.connected?"connected":(f.online?"online":"");
-    const st=f.connected?"подключён • P2P":(f.online?"онлайн":"оффлайн");
+  list.forEach(f=>{const it=document.createElement("div");it.className="friend-item"+(state.activeChat===f.id?" active":"");
+    const dc=f.connected?"connected":(f.online?"online":"");const st=f.connected?"подключён • P2P":(f.online?"онлайн":"оффлайн");
     const u=state.unread[f.id]||0;
     it.innerHTML=`<div class="avatar small">${initials(f.name)}</div>
-      <div class="fi-info"><div class="fi-name">${esc(f.name)}</div>
-      <div class="fi-status"><span class="status-dot ${dc}"></span>${st}</div></div>
-      ${u?`<div class="unread-badge">${u}</div>`:""}`;
-    it.onclick=()=>openChat(f.id);
-    E.friendsList.appendChild(it);
-  });
-}
+    <div class="fi-info"><div class="fi-name">${esc(f.name)}</div>
+    <div class="fi-status"><span class="status-dot ${dc}"></span>${st}</div></div>
+    ${u?`<div class="unread-badge">${u}</div>`:""}`;
+    it.onclick=()=>openChat(f.id);E.friendsList.appendChild(it);});}
 
-function openChat(id){
-  state.activeChat=id;state.unread[id]=0;
+function openChat(id){state.activeChat=id;state.unread[id]=0;
   E.emptyState.classList.add("hidden");E.chatPanel.classList.remove("hidden");
-  updateHeader();renderMessages();renderFriends();E.msgInput.focus();
-}
-function updateHeader(){
-  const id=state.activeChat;if(!id||!state.friends[id])return;
-  const f=state.friends[id];
+  updateHeader();renderMessages();renderFriends();E.msgInput.focus();}
+function updateHeader(){const id=state.activeChat;if(!id||!state.friends[id])return;const f=state.friends[id];
   E.chatAvatar.textContent=initials(f.name);E.chatTitle.textContent=f.name;
   E.chatStatus.className="chat-status "+(f.connected?"connected":(f.online?"online":""));
   E.chatStatus.textContent=f.connected?"🔗 подключён напрямую (P2P)":(f.online?"онлайн":"оффлайн");
-  const c=f.connected;E.msgInput.disabled=!c;E.sendBtn.disabled=!c;
-  E.msgInput.placeholder=c?"Напишите сообщение…":"Нет соединения с другом";
-}
-function renderMessages(){
-  const id=state.activeChat;E.messages.innerHTML="";
-  (state.history[id]||[]).forEach(m=>appendMsg(m));
-  E.messages.scrollTop=E.messages.scrollHeight;
-}
-function appendMsg(m){
-  const el=document.createElement("div");
+  const c=f.connected;E.msgInput.disabled=!c;E.sendBtn.disabled=!c;E.attachBtn.disabled=!c;E.emojiBtn.disabled=!c;
+  E.callAudioBtn.disabled=!c;E.callVideoBtn.disabled=!c;
+  E.msgInput.placeholder=c?"Напишите сообщение…":"Нет соединения с другом";}
+
+function renderMessages(){const id=state.activeChat;E.messages.innerHTML="";
+  (state.history[id]||[]).forEach(m=>appendMsg(m));E.messages.scrollTop=E.messages.scrollHeight;}
+function appendMsg(m){const el=document.createElement("div");
   if(m.dir==="system"){el.className="msg system";el.textContent=m.text;}
-  else{el.className="msg "+(m.dir==="me"?"me":"them");el.innerHTML=`${esc(m.text)}<span class="time">${m.t}</span>`;}
-  E.messages.appendChild(el);E.messages.scrollTop=E.messages.scrollHeight;
-}
+  else{el.className="msg "+(m.dir==="me"?"me":"them");
+    if(m.kind==="file"){el.innerHTML=renderFileHtml(m);}
+    else el.innerHTML=`${esc(m.text)}<span class="time">${m.t}</span>`;}
+  E.messages.appendChild(el);E.messages.scrollTop=E.messages.scrollHeight;return el;}
+function renderFileHtml(m){
+  let media="";
+  if(m.url&&m.mime&&m.mime.startsWith("image/"))media=`<img src="${m.url}" alt="">`;
+  else if(m.url&&m.mime&&m.mime.startsWith("video/"))media=`<video src="${m.url}" controls></video>`;
+  const link=m.url?`<a class="dl-link" href="${m.url}" download="${esc(m.name)}">⬇ ${esc(m.name)}</a>`:`<span class="file-name">📎 ${esc(m.name)}</span>`;
+  return `${media}<div class="file-name">${link} • ${fmtSize(m.size||0)}</div><span class="time">${m.t}</span>`;}
 function pushSystem(id,text){if(!state.history[id])state.history[id]=[];
-  const m={dir:"system",text,t:now()};state.history[id].push(m);
-  if(state.activeChat===id)appendMsg(m);save();}
+  const m={dir:"system",kind:"system",text,t:now()};state.history[id].push(m);if(state.activeChat===id)appendMsg(m);save();}
 
-function sendMessage(){
-  const id=state.activeChat,text=E.msgInput.value.trim();
-  if(!text||!id)return;
-  const conn=state.conns[id];
-  if(!conn){toast("Нет P2P-соединения.","err");return;}
-  try{conn.send({k:"msg",text});}catch(e){toast("Не удалось отправить.","err");return;}
-  const m={dir:"me",text,t:now()};state.history[id].push(m);appendMsg(m);
-  E.msgInput.value="";save();
-}
-function receiveMessage(id,text){
-  if(!state.history[id])state.history[id]=[];
-  const m={dir:"them",text,t:now()};state.history[id].push(m);
+function sendMessage(){const id=state.activeChat,text=E.msgInput.value.trim();if(!text||!id)return;
+  const c=state.conns[id];if(!c){toast("Нет соединения.","err");return;}
+  c.send({k:"msg",text});const m={dir:"me",kind:"text",text,t:now()};state.history[id].push(m);appendMsg(m);
+  E.msgInput.value="";save();}
+function receiveMessage(id,text){if(!state.history[id])state.history[id]=[];
+  const m={dir:"them",kind:"text",text,t:now()};state.history[id].push(m);
   if(state.activeChat===id)appendMsg(m);
-  else{state.unread[id]=(state.unread[id]||0)+1;renderFriends();
-    toast("💬 "+((state.friends[id]||{}).name||"Друг")+": "+text.slice(0,40),"");}
-  save();
-}
+  else{state.unread[id]=(state.unread[id]||0)+1;renderFriends();toast("💬 "+((state.friends[id]||{}).name||"Друг")+": "+text.slice(0,40),"");}
+  save();}
 
-/* ---------- режимы (вкладки) ---------- */
-function setMode(mode){
-  state.mode=mode;
-  E.tabId.classList.toggle("active",mode==="id");
-  E.tabCode.classList.toggle("active",mode==="code");
-  E.modeId.classList.toggle("hidden",mode!=="id");
-  E.modeCode.classList.toggle("hidden",mode!=="code");
+/* ===========================================================
+   ФАЙЛЫ (фото/видео до 289 МБ) — чанками
+   =========================================================== */
+async function sendFiles(files){
+  const id=state.activeChat;const c=state.conns[id];if(!c){toast("Нет соединения.","err");return;}
+  for(const file of files){
+    if(file.size>MAX_FILE){toast(`«${file.name}» больше 289 МБ — пропущено.`,"err");continue;}
+    const fileId=uid();
+    const buf=await file.arrayBuffer();const bytes=new Uint8Array(buf);
+    const total=Math.ceil(bytes.length/CHUNK)||1;
+    // локально показываем сразу
+    const url=URL.createObjectURL(file);
+    const myMsg={dir:"me",kind:"file",name:file.name,mime:file.type,size:file.size,url,t:now()};
+    state.history[id].push(myMsg);const el=appendMsg(myMsg);
+    const prog=document.createElement("div");prog.className="progress";prog.innerHTML="<i></i>";el.appendChild(prog);
+    const bar=prog.firstChild;
+    c.send({k:"file-meta",fileId,name:file.name,mime:file.type,size:file.size,total});
+    // отправка чанков с лёгким контролем буфера
+    for(let i=0;i<total;i++){
+      const slice=bytes.subarray(i*CHUNK,(i+1)*CHUNK);
+      // base64 чтобы безопасно слать через JSON-канал PeerJS/manual
+      let bin="";for(let j=0;j<slice.length;j++)bin+=String.fromCharCode(slice[j]);
+      c.send({k:"file-chunk",fileId,i,data:btoa(bin)});
+      bar.style.width=Math.round(((i+1)/total)*100)+"%";
+      if(i%8===0)await new Promise(r=>setTimeout(r,0)); // не блокировать UI
+    }
+    c.send({k:"file-end",fileId});
+    prog.remove();save();
+  }
 }
+function fileMetaIn(from,d){state.rx[d.fileId]={from,meta:d,chunks:new Array(d.total),received:0};}
+function fileChunkIn(from,d){const r=state.rx[d.fileId];if(!r)return;
+  if(r.chunks[d.i]===undefined){const bin=atob(d.data);const arr=new Uint8Array(bin.length);
+    for(let k=0;k<bin.length;k++)arr[k]=bin.charCodeAt(k);r.chunks[d.i]=arr;r.received++;}}
+function fileEndIn(from,d){const r=state.rx[d.fileId];if(!r)return;
+  const blob=new Blob(r.chunks,{type:r.meta.mime||"application/octet-stream"});
+  const url=URL.createObjectURL(blob);
+  const m={dir:"them",kind:"file",name:r.meta.name,mime:r.meta.mime,size:r.meta.size,url,t:now()};
+  if(!state.history[from])state.history[from]=[];state.history[from].push(m);
+  if(state.activeChat===from)appendMsg(m);
+  else{state.unread[from]=(state.unread[from]||0)+1;renderFriends();
+    toast("📎 "+((state.friends[from]||{}).name||"Друг")+": "+r.meta.name,"");}
+  delete state.rx[d.fileId];save();}
+
+/* ===========================================================
+   ЗВОНКИ (аудио/видео) — через PeerJS media call.
+   В режиме «по коду» звонки не используются (нужен брокер).
+   =========================================================== */
+async function startCall(video){
+  const id=state.activeChat;if(!id)return;
+  if(!state.peer){toast("Звонки работают в режиме «По ID».","err");return;}
+  let stream;
+  try{stream=await navigator.mediaDevices.getUserMedia({audio:true,video:video});}
+  catch(e){toast("Нет доступа к "+(video?"камере/микрофону":"микрофону"),"err");return;}
+  const mc=state.peer.call(id,stream,{metadata:{video,name:state.myName}});
+  state.call={id,role:"caller",video,localStream:stream,mc};
+  openCallUI({id,video,incoming:false});
+  mc.on("stream",rs=>onRemoteStream(rs));
+  mc.on("close",()=>endCall(true));mc.on("error",()=>endCall(true));
+  setCallControls();
+}
+function incomingCall(mc){
+  const id=mc.peer;const video=!!(mc.metadata&&mc.metadata.video);
+  const name=(state.friends[id]||{}).name||(mc.metadata&&mc.metadata.name)||"Друг";
+  state.call={id,role:"callee",video,mc,pendingAnswer:true};
+  openCallUI({id,video,incoming:true,name});
+  setCallControls(true);
+}
+async function answerCall(){
+  const c=state.call;if(!c)return;
+  let stream;
+  try{stream=await navigator.mediaDevices.getUserMedia({audio:true,video:c.video});}
+  catch(e){toast("Нет доступа к устройствам","err");endCall(true);return;}
+  c.localStream=stream;c.pendingAnswer=false;
+  c.mc.answer(stream);
+  c.mc.on("stream",rs=>onRemoteStream(rs));
+  c.mc.on("close",()=>endCall(true));c.mc.on("error",()=>endCall(true));
+  E.callIncoming.classList.add("hidden");E.callActive.classList.remove("hidden");
+  if(c.localStream)E.localVideo.srcObject=c.localStream;
+  setCallControls();
+}
+function onRemoteStream(rs){const c=state.call;if(!c)return;c.remoteStream=rs;
+  E.callIncoming.classList.add("hidden");E.callActive.classList.remove("hidden");
+  E.remoteVideo.srcObject=rs;if(c.localStream)E.localVideo.srcObject=c.localStream;
+  E.callSub.textContent="на связи";}
+function openCallUI({id,video,incoming,name}){
+  const fn=name||(state.friends[id]||{}).name||"Друг";
+  E.callOverlay.classList.remove("hidden");
+  E.callAvatar.textContent=initials(fn);E.callTitle.textContent=fn;
+  E.callSub.textContent=incoming?(video?"Входящий видеозвонок":"Входящий аудиозвонок"):"Вызов…";
+  E.callIncoming.classList.remove("hidden");E.callActive.classList.add("hidden");
+  E.localVideo.style.display=video?"":"none";}
+function setCallControls(incoming){
+  const c=state.call;E.callControls.innerHTML="";
+  const mk=(cls,txt,fn,title)=>{const b=document.createElement("button");b.className="call-ctrl "+cls;b.textContent=txt;b.title=title||"";b.onclick=fn;E.callControls.appendChild(b);return b;};
+  if(incoming&&c&&c.pendingAnswer){
+    mk("accept","📞",answerCall,"Принять");
+    mk("hang","✖",()=>endCall(false),"Отклонить");
+  }else{
+    mk("","🎙",toggleMic,"Микрофон");
+    if(c&&c.video)mk("","📷",toggleCam,"Камера");
+    mk("hang","📵",()=>endCall(false),"Завершить");
+  }
+}
+function toggleMic(){const c=state.call;if(!c||!c.localStream)return;
+  c.localStream.getAudioTracks().forEach(t=>t.enabled=!t.enabled);
+  const on=c.localStream.getAudioTracks()[0]?.enabled;
+  const btn=E.callControls.children[0];if(btn)btn.classList.toggle("off",!on);
+  toast(on?"Микрофон вкл":"Микрофон выкл","");}
+function toggleCam(){const c=state.call;if(!c||!c.localStream)return;
+  c.localStream.getVideoTracks().forEach(t=>t.enabled=!t.enabled);
+  const on=c.localStream.getVideoTracks()[0]?.enabled;
+  const btn=E.callControls.children[1];if(btn)btn.classList.toggle("off",!on);}
+function endCall(silent){const c=state.call;
+  if(c){try{c.mc&&c.mc.close();}catch(e){}
+    try{c.localStream&&c.localStream.getTracks().forEach(t=>t.stop());}catch(e){}}
+  state.call=null;E.callOverlay.classList.add("hidden");
+  E.remoteVideo.srcObject=null;E.localVideo.srcObject=null;
+  if(!silent)toast("Звонок завершён","");}
+
+/* ===========================================================
+   ЭМОДЗИ
+   =========================================================== */
+const EMOJIS="😀 😁 😂 🤣 😊 😍 😘 😎 🤩 🥳 😉 🙃 😴 🤔 🤨 😏 😇 🥲 😢 😭 😤 😡 🤬 😱 😬 🤯 🥶 🤒 🤕 🤢 🤮 😷 🤧 🥵 👍 👎 👌 ✌️ 🤞 🤟 🤘 👊 ✊ 👏 🙌 🙏 💪 🔥 ✨ ⭐ 🌟 💯 ❤️ 🧡 💛 💚 💙 💜 🖤 🤍 💔 💖 💘 💕 🎉 🎊 🎁 🎂 🍕 🍔 🍟 🌮 🍩 🍺 🍻 ☕ 🚀 🛸 🌌 🌍 🐱 🐶 🦊 🐼 🦄 👀 💀 👻 🤖 👽 💩 🥹".split(" ");
+function buildEmoji(){E.emojiPanel.innerHTML="";EMOJIS.forEach(em=>{const s=document.createElement("span");s.textContent=em;
+  s.onclick=()=>{E.msgInput.value+=em;E.msgInput.focus();};E.emojiPanel.appendChild(s);});}
+
+/* ---------- режимы/вкладки ---------- */
+function setMode(mode){state.mode=mode;
+  E.tabId.classList.toggle("active",mode==="id");E.tabCode.classList.toggle("active",mode==="code");
+  E.modeId.classList.toggle("hidden",mode!=="id");E.modeCode.classList.toggle("hidden",mode!=="code");}
 
 /* ---------- запуск ---------- */
-function enter(){
-  const name=E.nameInput.value.trim();if(!name){E.nameInput.focus();return;}
+function enter(){const name=E.nameInput.value.trim();if(!name){E.nameInput.focus();return;}
   state.myName=name;E.loginScreen.classList.add("hidden");E.app.classList.remove("hidden");
   E.myName.textContent=name;E.myAvatar.textContent=initials(name);
-  save();renderFriends();startPeer();
-}
+  save();renderFriends();buildEmoji();startPeer();}
 
 /* ---------- события ---------- */
-E.enterBtn.onclick=enter;
-E.nameInput.onkeydown=e=>{if(e.key==="Enter")enter();};
-E.addFriendBtn.onclick=addFriendById;
-E.friendIdInput.onkeydown=e=>{if(e.key==="Enter")addFriendById();};
-E.sendBtn.onclick=sendMessage;
-E.msgInput.onkeydown=e=>{if(e.key==="Enter")sendMessage();};
+E.enterBtn.onclick=enter;E.nameInput.onkeydown=e=>{if(e.key==="Enter")enter();};
+E.addFriendBtn.onclick=addFriendById;E.friendIdInput.onkeydown=e=>{if(e.key==="Enter")addFriendById();};
+E.sendBtn.onclick=sendMessage;E.msgInput.onkeydown=e=>{if(e.key==="Enter")sendMessage();};
 E.copyIdBtn.onclick=()=>{if(state.myId){navigator.clipboard&&navigator.clipboard.writeText(state.myId);toast("ID скопирован!","ok");}};
 E.tabId.onclick=()=>setMode("id");E.tabCode.onclick=()=>setMode("code");
-E.makeOfferBtn.onclick=makeOffer;
-E.acceptCodeBtn.onclick=acceptCode;
+E.makeOfferBtn.onclick=makeOffer;E.acceptCodeBtn.onclick=acceptCode;
 E.copyOfferBtn.onclick=()=>{if(E.offerOut.value){navigator.clipboard&&navigator.clipboard.writeText(E.offerOut.value);toast("Код скопирован!","ok");}};
 E.copyAnswerBtn.onclick=()=>{if(E.answerOut.value){navigator.clipboard&&navigator.clipboard.writeText(E.answerOut.value);toast("Ответ скопирован!","ok");}};
+E.emojiBtn.onclick=()=>E.emojiPanel.classList.toggle("hidden");
+document.addEventListener("click",e=>{if(!E.emojiPanel.contains(e.target)&&e.target!==E.emojiBtn)E.emojiPanel.classList.add("hidden");});
+E.attachBtn.onclick=()=>E.fileInput.click();
+E.fileInput.onchange=()=>{if(E.fileInput.files.length)sendFiles([...E.fileInput.files]);E.fileInput.value="";};
+E.callAudioBtn.onclick=()=>startCall(false);E.callVideoBtn.onclick=()=>startCall(true);
 
-load();
-if(state.myName)E.nameInput.value=state.myName;
+load();if(state.myName)E.nameInput.value=state.myName;
 })();
 </script>
-<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v833ccba57c9e4d2798f2e76cebdd09a11778172276447" integrity="sha512-57MDmcccJXYtNnH+ZiBwzC4jb2rvgVCEokYN+L/nLlmO8rfYT/gIpW2A569iJ/3b+0UEasghjuZH/ma3wIs/EQ==" data-cf-beacon='{"version":"2024.11.0","token":"1954b47c125f43f8b4338b3c4f804e4f","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a11f84a1cba29da7',t:'MTc4MjUxMTU3NQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a11f9b6f29f5f12f',t:'MTc4MjUxMjUwOQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
