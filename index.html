@@ -796,7 +796,9 @@ async function createOfferAndGenerateCode() {
       // QR-код
       E.qrBox.innerHTML = '';
       E.qrBox.classList.remove('hidden');
-      new QRCode(E.qrBox, { text: state._offerUrl, width: 150, height: 150 });
+      E.qrBox.innerHTML = '';
+      E.qrBox.appendChild(createQR(state._offerUrl));
+
       // Кнопка «Поделиться» для мобильных
       if (navigator.share) {
         E.shareBtn.style.display = '';
